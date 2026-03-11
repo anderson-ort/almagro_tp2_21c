@@ -45,8 +45,7 @@ Desarrollo de un proyecto, grupal, de temática libre, aplicando todos los conce
 
 Podés acceder a los videos de las clases desde el siguiente enlace:
 
-🔗 [Link a la carpeta con los videos](https://drive.google.com/drive/folders/1jMTs7-5-gU95yhJk3rqQSd3btq-9pXfP?usp=drive_link)
-
+🔗 [Link a la carpeta con los videos](https://drive.google.com/drive/folders/1GjHUST7n97rCsHr4r6L0I_JzjmCPfOCV?usp=sharing)
 
 
 ## Contacto
