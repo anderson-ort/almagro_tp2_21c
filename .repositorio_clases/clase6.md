@@ -52,7 +52,7 @@ Garantiza que una clase tenga una unica instancia en toda la aplicacion. Util pa
 
 ```javascript
 // config/supabase.js — Singleton de la conexion
-const { createClient } = require('@supabase/supabase-js')
+import { createClient } from '@supabase/supabase-js'
 
 let instance = null
 
@@ -66,10 +66,10 @@ const getSupabaseClient = () => {
   return instance
 }
 
-module.exports = { getSupabaseClient }
+export { getSupabaseClient }
 
 // Uso en cualquier modulo:
-// const { getSupabaseClient } = require('../config/supabase')
+// import { getSupabaseClient } from '../config/supabase'
 // const supabase = getSupabaseClient()
 ```
 
@@ -81,13 +81,13 @@ Centraliza la creacion de objetos. En lugar de instanciar directamente, se llama
 
 ```javascript
 // services/ai.factory.js
+import OpenAI from 'openai'
+
 const createAIClient = (provider = 'openai') => {
   if (provider === 'openai') {
-    const OpenAI = require('openai')
     return new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
   }
   if (provider === 'xai') {
-    const OpenAI = require('openai')
     return new OpenAI({
       baseURL: 'https://api.x.ai/v1',
       apiKey: process.env.XAI_API_KEY
@@ -96,7 +96,7 @@ const createAIClient = (provider = 'openai') => {
   throw new Error(`Proveedor IA desconocido: ${provider}`)
 }
 
-module.exports = { createAIClient }
+export { createAIClient }
 ```
 
 ### Patron DAO / DTO
@@ -173,7 +173,7 @@ AI_PROVIDER=openai
 ### `src/config/supabase.js` — Singleton
 
 ```javascript
-const { createClient } = require('@supabase/supabase-js')
+import { createClient } from '@supabase/supabase-js'
 
 let instance = null
 
@@ -191,13 +191,13 @@ const getSupabaseClient = () => {
   return instance
 }
 
-module.exports = { getSupabaseClient }
+export { getSupabaseClient }
 ```
 
 ### `src/services/embedding.service.js`
 
 ```javascript
-const { createAIClient } = require('./ai.factory')
+import { createAIClient } from './ai.factory'
 
 const generateEmbedding = async (text) => {
   const client = createAIClient(process.env.AI_PROVIDER)
@@ -210,13 +210,13 @@ const generateEmbedding = async (text) => {
   return response.data[0].embedding  // vector de 1536 dimensiones
 }
 
-module.exports = { generateEmbedding }
+export { generateEmbedding }
 ```
 
 ### `src/repositories/document.repository.js`
 
 ```javascript
-const { getSupabaseClient } = require('../config/supabase')
+import { getSupabaseClient } from '../config/supabase'
 
 class DocumentRepository {
   constructor() {
@@ -251,15 +251,15 @@ class DocumentRepository {
   }
 }
 
-module.exports = new DocumentRepository()
+export default new DocumentRepository()
 ```
 
 ### `src/services/chat.service.js`
 
 ```javascript
-const { createAIClient } = require('./ai.factory')
-const { generateEmbedding } = require('./embedding.service')
-const documentRepository = require('../repositories/document.repository')
+import { createAIClient } from './ai.factory'
+import { generateEmbedding } from './embedding.service'
+import documentRepository from '../repositories/document.repository'
 
 const answerQuery = async (query, userId) => {
   // 1. Generar embedding de la query
@@ -303,16 +303,17 @@ Cita las fuentes cuando respondas.`
   }
 }
 
-module.exports = { answerQuery }
+export { answerQuery }
 ```
 
 ### `src/routes/chat.routes.js` — refactorizado
 
 ```javascript
-const express = require('express')
+import express from 'express'
+import { verifyJWT } from '../middleware/auth.middleware'
+import { answerQuery } from '../services/chat.service'
+
 const router = express.Router()
-const { verifyJWT } = require('../middleware/auth.middleware')
-const { answerQuery } = require('../services/chat.service')
 
 router.post('/', verifyJWT, async (req, res) => {
   const { query } = req.body
@@ -335,7 +336,7 @@ router.post('/', verifyJWT, async (req, res) => {
   }
 })
 
-module.exports = router
+export default router
 ```
 
 ---

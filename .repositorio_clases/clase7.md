@@ -139,9 +139,9 @@ npm install multer pdf-parse
 ### `src/services/upload.service.js` — pipeline completo
 
 ```javascript
-const pdfParse = require('pdf-parse')
-const { generateEmbedding } = require('./embedding.service')
-const documentRepository = require('../repositories/document.repository')
+import pdfParse from 'pdf-parse'
+import { generateEmbedding } from './embedding.service'
+import documentRepository from '../repositories/document.repository'
 
 const CHUNK_SIZE = 512      // caracteres por chunk
 const CHUNK_OVERLAP = 50   // solapamiento entre chunks
@@ -190,17 +190,18 @@ const processPDF = async (fileBuffer, originalName) => {
   }
 }
 
-module.exports = { processPDF }
+export { processPDF }
 ```
 
 ### `src/routes/upload.routes.js`
 
 ```javascript
-const express = require('express')
-const multer = require('multer')
+import express from 'express'
+import multer from 'multer'
+import { verifyApiKey } from '../middleware/auth.middleware'
+import { processPDF } from '../services/upload.service'
+
 const router = express.Router()
-const { verifyApiKey } = require('../middleware/auth.middleware')
-const { processPDF } = require('../services/upload.service')
 
 // Multer: solo acepta PDFs, limite 10MB, almacena en memoria
 const upload = multer({
@@ -233,13 +234,13 @@ router.post('/', verifyApiKey, upload.single('file'), async (req, res) => {
   }
 })
 
-module.exports = router
+export default router
 ```
 
 ### Registrar la ruta en `app.js`
 
 ```javascript
-const uploadRoutes = require('./src/routes/upload.routes')
+import uploadRoutes from './src/routes/upload.routes.js'
 app.use('/api/v1/upload', uploadRoutes)
 ```
 

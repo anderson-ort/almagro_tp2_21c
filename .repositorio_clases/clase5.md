@@ -102,7 +102,7 @@ API_KEY=clave-admin-supersecreta-2024
 ### `src/middleware/auth.middleware.js`
 
 ```javascript
-const jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 
 // Middleware JWT: verifica Bearer token en Authorization header
 const verifyJWT = (req, res, next) => {
@@ -137,14 +137,15 @@ const verifyApiKey = (req, res, next) => {
   next()
 }
 
-module.exports = { verifyJWT, verifyApiKey }
+export { verifyJWT, verifyApiKey }
 ```
 
 ### `src/routes/auth.routes.js` — login y registro mock
 
 ```javascript
-const express = require('express')
-const jwt = require('jsonwebtoken')
+import express from 'express'
+import jwt from 'jsonwebtoken'
+
 const router = express.Router()
 
 // Usuarios en memoria (en clase 4 migramos a DB)
@@ -180,16 +181,17 @@ router.post('/login', (req, res) => {
   })
 })
 
-module.exports = router
+export default router
 ```
 
 ### Aplicar middleware en las rutas
 
 ```javascript
 // src/routes/chat.routes.js
-const express = require('express')
+import express from 'express'
+import { verifyJWT } from '../middleware/auth.middleware'
+
 const router = express.Router()
-const { verifyJWT } = require('../middleware/auth.middleware')
 
 // verifyJWT se ejecuta ANTES del handler
 router.post('/', verifyJWT, async (req, res) => {
@@ -207,13 +209,13 @@ router.post('/', verifyJWT, async (req, res) => {
   })
 })
 
-module.exports = router
+export default router
 ```
 
 ### Rate limiting en `app.js`
 
 ```javascript
-const rateLimit = require('express-rate-limit')
+import rateLimit from 'express-rate-limit'
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,  // 15 minutos
@@ -279,7 +281,7 @@ npm install @scalar/express-api-reference
 ### `swagger.js` — generador del spec
 
 ```javascript
-const swaggerAutogen = require('swagger-autogen')()
+import swaggerAutogen from 'swagger-autogen'
 
 const doc = {
   info: {
@@ -308,7 +310,7 @@ const doc = {
 const outputFile = './swagger.json'
 const routes = ['./app.js']
 
-swaggerAutogen(outputFile, routes, doc)
+swaggerAutogen()(outputFile, routes, doc)
 ```
 
 ### Agregar comentarios en los handlers
@@ -343,11 +345,50 @@ router.post('/', verifyJWT, async (req, res) => {
 ### Integrar en `app.js`
 
 ```javascript
-const swaggerUi = require('swagger-ui-express')
-const swaggerDocument = require('./swagger.json')
+import swaggerUi from 'swagger-ui-express'
+import swaggerDocument from './swagger.json'
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 ```
+
+### Configuracion del proyecto para ES6
+
+Para que Node.js reconozca los imports/export, agregar `"type": "module"` en `package.json`:
+
+```json
+{
+  "name": "edubot-rag",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "test": "jest --coverage"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "express-rate-limit": "^7.1.5",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.0",
+    "openai": "^4.28.0",
+    "@supabase/supabase-js": "^2.39.3",
+    "multer": "^1.4.5-lts.1",
+    "pdf-parse": "^1.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3",
+    "jest": "^29.7.0",
+    "supertest": "^6.3.4"
+  }
+}
+```
+
+**Nota:** Al usar `"type": "module"`, todos los archivos `.js` se tratan como ES6. Si tenes archivos CommonJS, renombralos a `.cjs` o convertilos a ES6.
 
 ---
 

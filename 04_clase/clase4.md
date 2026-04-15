@@ -102,6 +102,7 @@ npm install --save-dev nodemon
 
 ```json
 {
+  "type": "module",
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js"
@@ -112,8 +113,10 @@ npm install --save-dev nodemon
 ### `server.js` — punto de entrada
 
 ```javascript
-require('dotenv').config()
-const app = require('./app')
+import dotenv from 'dotenv'
+import app from './app.js'
+
+dotenv.config()
 
 const PORT = process.env.PORT || 3000
 
@@ -125,11 +128,11 @@ app.listen(PORT, () => {
 ### `app.js` — configuracion Express
 
 ```javascript
-const express = require('express')
-const cors = require('cors')
-const helmet = require('helmet')
+import express from 'express'
+import cors from 'cors'
+import helmet from 'helmet'
 
-const chatRoutes = require('./src/routes/chat.routes')
+import chatRoutes from './src/routes/chat.routes.js'
 
 const app = express()
 
@@ -151,13 +154,14 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Ruta no encontrada' })
 })
 
-module.exports = app
+export default app
 ```
 
 ### `src/routes/chat.routes.js`
 
 ```javascript
-const express = require('express')
+import express from 'express'
+
 const router = express.Router()
 
 // POST /api/v1/chat
@@ -176,7 +180,7 @@ router.post('/', async (req, res) => {
   })
 })
 
-module.exports = router
+export default router
 ```
 
 ### Variables de entorno — `.env`

@@ -28,8 +28,8 @@ Los tests automatizados son la unica forma de garantizar que el codigo sigue fun
 **Supertest:** permite hacer requests HTTP a la app Express directamente en memoria, sin levantar el servidor en un puerto real.
 
 ```javascript
-const request = require('supertest')
-const app = require('../app')
+import request from 'supertest'
+import app from '../app.js'
 
 describe('POST /api/v1/auth/login', () => {
   it('devuelve 200 y un token con credenciales validas', async () => {
@@ -98,8 +98,8 @@ npm install --save-dev jest supertest
 ### `tests/auth.test.js`
 
 ```javascript
-const request = require('supertest')
-const app = require('../app')
+import request from 'supertest'
+import app from '../app.js'
 
 describe('Auth endpoints', () => {
   describe('POST /api/v1/auth/login', () => {
@@ -135,9 +135,9 @@ describe('Auth endpoints', () => {
 ### `tests/chat.test.js` — con mocks de servicios externos
 
 ```javascript
-const request = require('supertest')
-const jwt = require('jsonwebtoken')
-const app = require('../app')
+import request from 'supertest'
+import jwt from 'jsonwebtoken'
+import app from '../app.js'
 
 // Mockear servicios externos
 jest.mock('../src/services/embedding.service', () => ({
