@@ -1,0 +1,25 @@
+@host=http://127.0.0.1
+@port=3000
+
+GET {{host}}:{{port}}/
+
+
+### Health Status
+GET {{host}}:{{port}}/health
+
+
+
+### Health Status
+GET {{host}}:{{port}}/proxy/pokemon/location
+
+
+
+
+
+### llamado a la api
+POST  {{host}}:{{port}}/api/v1/chat
+Content-Type: application/json
+
+{
+    "prompt": "stub"
+}
