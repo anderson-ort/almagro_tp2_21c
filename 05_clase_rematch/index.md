@@ -2,24 +2,30 @@
 
 ### **Arquitectura de una API profesional**
 
+
+---
+## Anexo CRUD (sin SGBD)
+
+[Anexo 'Crud'](./anexo-crud.md)
+
 ---
 
-## 🔐 Seguridad
+## Seguridad
 
 * **Autenticación:** identidad del usuario
 * **Autorización:** permisos y roles
 * **Mecanismos:**
 
-  * **JWT:** usuarios autenticados (stateless, expira)
-  * **x-api-key:** integraciones y administración
+  * **JWT:** usuarios autenticados (stateless, expira) *se implementara por cuestiones uso masivo*
+  * **x-api-key:** integraciones y administración 
 * **Protecciones adicionales:**
 
-  * Rate Limiting (anti abuso)
+  * Rate Limiting (anti abuso) *caso de uso en nuestra aplicacion en el rag*
   * HTTPS obligatorio
 
 ---
 
-## 📄 Documentación
+##  Documentación
 
 * **OpenAPI (OAS):** contrato de la API
 * **Herramientas:**
@@ -34,7 +40,7 @@
 
 ---
 
-## 🔄 Versionado
+##  Versionado
 
 * **Estrategia:** `/api/v1`, `/api/v2`
 * **Cuándo aplicar:** cambios *breaking*
@@ -42,7 +48,7 @@
 
 ---
 
-## ⚙️ Implementación (Proyecto)
+##  Implementación (Proyecto)
 
 * Flujo: **Login → Token → Request protegida**
 * Uso de **middlewares**:
