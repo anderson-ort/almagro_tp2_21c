@@ -1,0 +1,10 @@
+### Test GET /random - Without token
+GET http://localhost:3000/api/v1/quotes/random
+
+### Test GET /random - With valid token (replace TOKEN with actual token)
+GET http://localhost:3000/api/v1/quotes/random
+Authorization: Bearer TOKEN
+
+### Test GET /random - With invalid token
+GET http://localhost:3000/api/v1/quotes/random
+Authorization: Bearer invalid_token_here

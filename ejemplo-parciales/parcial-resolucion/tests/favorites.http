@@ -1,0 +1,26 @@
+### Test POST /favorites - Add a favorite (replace TOKEN with actual token)
+POST http://localhost:3000/api/v1/quotes/favorites
+Content-Type: application/json
+Authorization: Bearer TOKEN
+
+{
+  "quote": "The only way to do great work is to love what you do",
+  "author": "Steve Jobs"
+}
+
+### Test GET /favorites - Get all favorites (replace TOKEN with actual token)
+GET http://localhost:3000/api/v1/quotes/favorites
+Authorization: Bearer TOKEN
+
+### Test DELETE /favorites - Delete a favorite (replace TOKEN with actual token and ID)
+DELETE http://localhost:3000/api/v1/quotes/favorites/1234567890
+Authorization: Bearer TOKEN
+
+### Test POST /favorites - Missing fields (replace TOKEN with actual token)
+POST http://localhost:3000/api/v1/quotes/favorites
+Content-Type: application/json
+Authorization: Bearer TOKEN
+
+{
+  "quote": "Only quote"
+}
