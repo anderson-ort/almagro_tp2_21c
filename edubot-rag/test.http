@@ -23,3 +23,43 @@ Content-Type: application/json
 {
     "prompt": "stub"
 }
+
+
+### llamado a la api
+POST  {{host}}:{{port}}/api/v1/chat
+Content-Type: application/json
+
+{
+    "user":{"userId": "user_5", "prompt":"stub"}
+}
+
+
+### borrado de historia
+DELETE  {{host}}:{{port}}/api/v1/history
+Content-Type: application/json
+
+{
+    "user":{"userId": "user_5"}
+}
+
+
+
+### llamado a la api
+GET  {{host}}:{{port}}/api/v1/history
+Content-Type: application/json
+
+{
+    "user":{"userId": "user_5"}
+}
+
+
+
+
+
+### llamado a la api
+POST  {{host}}:{{port}}/api/v1/login
+Content-Type: application/json
+
+{
+    "user":{"userName": "pepe", "password": "123"}
+}

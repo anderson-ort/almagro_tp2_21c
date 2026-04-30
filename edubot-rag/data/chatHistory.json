@@ -1,0 +1,83 @@
+{
+  "user_1": [
+    {
+      "id": "c1_u1",
+      "prompt": "¿Qué es JWT?",
+      "answer": "JWT (JSON Web Token) es un estándar para transmitir información segura entre partes como un objeto JSON firmado.",
+      "source": [
+        "internal-kb"
+      ],
+      "timestamp": "2026-04-20T10:15:00Z"
+    },
+    {
+      "id": "c2_u1",
+      "prompt": "¿Cómo uso middlewares en Express?",
+      "answer": "Los middlewares en Express son funciones que se ejecutan entre la request y la response. Se definen con app.use o en rutas específicas.",
+      "source": [
+        "internal-kb"
+      ],
+      "timestamp": "2026-04-20T10:20:00Z"
+    }
+  ],
+  "user_2": [
+    {
+      "id": "c1_u2",
+      "prompt": "¿Qué es React Query?",
+      "answer": "React Query es una librería para manejo de estado server-side que simplifica fetching, caching y sincronización de datos.",
+      "source": [
+        "internal-kb"
+      ],
+      "timestamp": "2026-04-21T14:05:00Z"
+    },
+    {
+      "id": "c2_u2",
+      "prompt": "¿Cuándo usar useEffect vs React Query?",
+      "answer": "useEffect es más bajo nivel. React Query abstrae lógica de fetching, caching y reintentos, por lo que es preferible para datos remotos.",
+      "source": [
+        "internal-kb"
+      ],
+      "timestamp": "2026-04-21T14:10:00Z"
+    }
+  ],
+  "user_3": [
+    {
+      "id": "c1_u3",
+      "prompt": "¿Qué es una PWA?",
+      "answer": "Una Progressive Web App es una aplicación web que utiliza capacidades modernas del navegador para ofrecer una experiencia similar a una app nativa.",
+      "source": [
+        "internal-kb"
+      ],
+      "timestamp": "2026-04-22T09:00:00Z"
+    },
+    {
+      "id": "c2_u3",
+      "prompt": "¿Cómo hago una PWA con Vite?",
+      "answer": "Podés usar vite-plugin-pwa para agregar service workers, manifest y caching automático.",
+      "source": [
+        "internal-kb"
+      ],
+      "timestamp": "2026-04-22T09:10:00Z"
+    }
+  ],
+  "user_4": [
+    {
+      "id": "c1_u4",
+      "prompt": "¿Qué es Supabase?",
+      "answer": "Supabase es una plataforma backend-as-a-service basada en PostgreSQL que ofrece auth, storage y APIs automáticas.",
+      "source": [
+        "internal-kb"
+      ],
+      "timestamp": "2026-04-23T16:30:00Z"
+    },
+    {
+      "id": "c2_u4",
+      "prompt": "¿Cómo autenticar usuarios en Supabase?",
+      "answer": "Se puede usar supabase.auth.signInWithPassword o proveedores OAuth. Maneja sesiones automáticamente.",
+      "source": [
+        "internal-kb"
+      ],
+      "timestamp": "2026-04-23T16:40:00Z"
+    }
+  ],
+  "user_5": []
+}

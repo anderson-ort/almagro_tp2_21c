@@ -5,6 +5,8 @@ import { __joiner } from './src/utils/utils.js'
 
 import { proxyRouter } from "./src/routes/proxy.router.js"
 import { chatRouter } from './src/routes/chat.router.js'
+import { historyRouter } from './src/routes/history.router.js'
+import { authRouter } from './src/routes/auth.router.js'
 
 
 const app = express()
@@ -41,7 +43,11 @@ app.get("/health", (requests, response) => {
 
 app.use("/proxy", proxyRouter)
 
+app.use("/api/v1", historyRouter)
+
 app.use("/api/v1", chatRouter)
+
+app.use("/api/v1", authRouter)
 
 app.use((request, response) => {
     response

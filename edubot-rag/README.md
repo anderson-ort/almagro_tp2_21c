@@ -39,3 +39,12 @@ Desarrollar un server API que exponga endpoints para verificación de estado y p
 * El endpoint `POST /data` persiste información sin romper la estructura del JSON
 * El endpoint `GET /data` devuelve los datos actualizados
 * Manejo básico de errores (ej: archivo no disponible, JSON inválido)
+
+
+
+
+TASK -> 
+   - Tener la posibilidad de tener algun historial de peticiones a GEMINI 
+   - Tener el store de cada chat con la respuesta a la API
+   
+
