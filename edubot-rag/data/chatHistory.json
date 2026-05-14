@@ -17,6 +17,50 @@
         "internal-kb"
       ],
       "timestamp": "2026-04-20T10:20:00Z"
+    },
+    {
+      "id": "1778717133397vj",
+      "timeStamp": "2026-05-14T00:05:33.397Z",
+      "prompt": "En el ultimo mundial, en que puesto quedo francia?",
+      "sources": [
+        "pag12.v5"
+      ]
+    },
+    {
+      "id": "1778718343213sg",
+      "timeStamp": "2026-05-14T00:25:43.213Z",
+      "prompt": "En el ultimo mundial, en que puesto quedo francia?",
+      "answer": "En el último mundial, que fue el de **Qatar 2022**, Francia quedó en el **segundo puesto** (subcampeón).",
+      "sources": [
+        "chatResponse"
+      ]
+    },
+    {
+      "id": "17787183919681f",
+      "timeStamp": "2026-05-14T00:26:31.968Z",
+      "prompt": "En el ultimo mundial, en que puesto quedo francia?",
+      "answer": "En el último Mundial de fútbol (Qatar 2022), **Francia quedó en segundo lugar**.\n\nPerdió la final contra Argentina en una emocionante tanda de penales.",
+      "sources": [
+        "chatResponse"
+      ]
+    },
+    {
+      "id": "177872091904747",
+      "timeStamp": "2026-05-14T01:08:39.047Z",
+      "prompt": "En el ultimo mundial, en que puesto quedo francia?",
+      "answer": "En el último Mundial (Qatar 2022), Francia quedó en **segundo lugar**.",
+      "sources": [
+        "chatResponse"
+      ]
+    },
+    {
+      "id": "1778721162718q9",
+      "timeStamp": "2026-05-14T01:12:42.718Z",
+      "prompt": "En el ultimo mundial, en que puesto quedo francia?",
+      "answer": "En el último Mundial de fútbol (Qatar 2022), **Francia quedó en segundo lugar**.\n\nFueron subcampeones al perder la final contra Argentina en la tanda de penales.",
+      "sources": [
+        "chatResponse"
+      ]
     }
   ],
   "user_2": [

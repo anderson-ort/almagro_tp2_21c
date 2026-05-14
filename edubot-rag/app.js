@@ -1,61 +1,61 @@
-import express from 'express'
-import cors from 'cors'
-import morgan from 'morgan'
-import { __joiner } from './src/utils/utils.js'
+import express from "express";
+import cors from "cors";
+import morgan from "morgan";
+import { __joiner } from "./src/utils/utils.js";
 
-import { proxyRouter } from "./src/routes/proxy.router.js"
-import { chatRouter } from './src/routes/chat.router.js'
-import { historyRouter } from './src/routes/history.router.js'
-import { authRouter } from './src/routes/auth.router.js'
+import { proxyRouter } from "./src/routes/proxy.router.js";
+import { chatRouter } from "./src/routes/chat.router.js";
+import { historyRouter } from "./src/routes/history.router.js";
+import { authRouter } from "./src/routes/auth.router.js";
+import { accessPreInfoRequest } from "./src/middlewares/preRequest.middleware.js";
+import { authMiddleware } from "./src/middlewares/auth.middleware.js";
+import swaggerUi from "swagger-ui-express";
+import fs from "fs";
 
+const swaggerFile = JSON.parse(
+    fs.readFileSync("./swagger-output.json", "utf-8"),
+);
 
-const app = express()
-const morganApacheStyle = ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]'
+const app = express();
+const morganApacheStyle =
+    ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]';
 
+app.use(cors());
+app.use(morgan(morganApacheStyle));
+app.use(express.static(__joiner("static"))); //commonJs __dirname //
 
-
-
-app.use(cors())
-app.use(morgan(morganApacheStyle))
-app.use(express.static(__joiner("static"))) //commonJs __dirname //
-
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (request, response) => {
-
-    response.sendFile(
-        __joiner("static", "index.html")
-    )
-})
-
+    response.sendFile(__joiner("static", "index.html"));
+});
 
 app.get("/health", (requests, response) => {
-    response
-        .status(200)
-        .json({
-            status: "ok",
-            timestamp: new Date().toISOString()
-        })
-})
+    response.status(200).json({
+        status: "ok",
+        timestamp: new Date().toISOString(),
+    });
+});
 
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
+// capa de intermediario
+app.use("/proxy", accessPreInfoRequest, proxyRouter);
 
-app.use("/proxy", proxyRouter)
+// crud
+app.use("/api/v1", historyRouter);
 
-app.use("/api/v1", historyRouter)
+// login
+app.use("/api/v1", authRouter);
 
-app.use("/api/v1", chatRouter)
-
-app.use("/api/v1", authRouter)
+// utilizando llm
+app.use("/api/v1", authMiddleware, chatRouter);
 
 app.use((request, response) => {
-    response
-        .status(404)
-        .json({
-            msg: "Not found 😒"
-        })
-})
+    response.status(404).json({
+        msg: "Not found 😒",
+    });
+});
 
-
-export default app
+export default app;

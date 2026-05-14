@@ -1,28 +1,16 @@
-import { createChatOne } from "../repositories/file.repository.js"
-import { __joiner } from "../utils/utils.js"
-import fs from "fs/promises"
-
+import { createChatOne } from "../repositories/file.repository.js";
+import { __joiner } from "../utils/utils.js";
+import { aiService } from "../services/ai.service.js";
 
 export const chatController = async (request, response) => {
+    const { userId } = request.user;
+    const { prompt } = request.body;
 
-    const { userId } = request.body.user
-    const { prompt } = request.body.user
+    const geminiApiResponse = await aiService.generateText(prompt);
 
-    const data = await fs.readFile(__joiner("data", "mocksGeminiResponse.json"), 'utf8')
+    await createChatOne(userId, prompt, geminiApiResponse, ["chatResponse"]);
 
-    const geminiApi = await JSON.parse(data)
+    response.status(200).json({ respuesta: geminiApiResponse });
 
-    await createChatOne(
-        userId, prompt, geminiApi[prompt], ['pag12.v5']
-    )
-
-    response
-        .status(200)
-        .json(
-            { respuesta: geminiApi[prompt] }
-        )
-
-    return
-}
-
-
+    return;
+};
