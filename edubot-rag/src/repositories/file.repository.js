@@ -1,79 +1,69 @@
+import fs from "fs/promises";
+import { __joiner } from "../utils/utils.js";
 
-import fs from "fs/promises"
-import { __joiner } from "../utils/utils.js"
-import { timeStamp } from "console"
-
-
-const HISTORY_FILE = __joiner("data", "chatHistory.json")
-
-// lectura total
-const readChatAllHistory = async () => {
-    const data = await fs.readFile(HISTORY_FILE, 'utf-8')
-    return JSON.parse(data)
-}
-//lectura de un user
-const retrieveChatUserHistory = async (userId) => {
-    const data = await readChatAllHistory()
-    return data[userId] || []
-}
-
-const findUserChatById = async (userId, chatId) => {
-    const chatHistory = await retrieveChatUserHistory(userId)
-
-    if (!chatHistory) return {}
-
-    const chatsFounded = chatHistory.filter(chat => chat.id === chatId)
-
-    if (!chatsFounded) return {}
-
-    return chatsFounded[0]
-
-}
-
-const writeBackToFile = async (data) => await fs.writeFile(HISTORY_FILE, JSON.stringify(data, null, 2))
-
-// almacenamiento de una respuesta
-
-const createChatOne = async (userId, prompt, answer, sources = []) => {
-
-    const data = await readChatAllHistory()
-
-    const chat = {
-        id: Date.now().toString() + Math.random().toString(36).substring(2, 4),
-        timeStamp: new Date().toISOString(),
-        prompt,
-        answer,
-        sources
+export default class ChatRepositoryFileService {
+    constructor() {
+        this.HISTORY_FILE = __joiner("data", "chatHistory.json");
     }
 
+    // lectura total
+    async readChatAllHistory() {
+        const data = await fs.readFile(this.HISTORY_FILE, "utf-8");
+        return JSON.parse(data);
+    }
 
-    data[userId].push(chat)
+    //lectura de un user
+    async retrieveChatUserHistory(userId) {
+        const data = await readChatAllHistory();
+        return data[userId] || [];
+    }
 
-    await writeBackToFile(data)
+    async findUserChatById(userId, chatId) {
+        const chatHistory = await this.retrieveChatUserHistory(userId);
 
-}
+        if (!chatHistory) return {};
 
-const deleteChatOne = async (userId, chatId) => {
-    const data = await readChatAllHistory()
-    data[userId] = data[userId].filter(chat => chat.id !== chatId)
-    await writeBackToFile(data)
-    return
-}
+        const chatsFounded = chatHistory.filter((chat) => chat.id === chatId);
 
-const deleteUserChatHistory = async (userId) => {
-    const inMemoryData = await readChatAllHistory()
-    inMemoryData[userId] = []
-    await writeBackToFile(inMemoryData)
-}
+        if (!chatsFounded) return {};
 
+        return chatsFounded[0];
+    }
 
-export {
-    readChatAllHistory,
-    retrieveChatUserHistory,
-    findUserChatById,
-    writeBackToFile,
-    createChatOne,
-    deleteChatOne,
-    deleteUserChatHistory
+    async writeBackToFile(data) {
+        return fs.writeFile(this.HISTORY_FILE, JSON.stringify(data, null, 2));
+    }
 
+    // almacenamiento de una respuesta
+
+    async createChatOne(userId, prompt, answer, sources = []) {
+        const data = await this.readChatAllHistory();
+
+        const chat = {
+            id:
+                Date.now().toString() +
+                Math.random().toString(36).substring(2, 4),
+            timeStamp: new Date().toISOString(),
+            prompt,
+            answer,
+            sources,
+        };
+
+        data[userId].push(chat);
+
+        await this.writeBackToFile(data);
+    }
+
+    async deleteChatOne(userId, chatId) {
+        const data = await this.readChatAllHistory();
+        data[userId] = data[userId].filter((chat) => chat.id !== chatId);
+        await this.writeBackToFile(data);
+        return;
+    }
+
+    async deleteUserChatHistory(userId) {
+        const inMemoryData = await this.readChatAllHistory();
+        inMemoryData[userId] = [];
+        await this.writeBackToFile(inMemoryData);
+    }
 }

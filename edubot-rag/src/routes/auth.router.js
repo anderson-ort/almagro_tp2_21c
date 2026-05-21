@@ -1,10 +1,9 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
 import { config } from "../config/config.js";
+import User from "../models/user.schema.js";
 
 const router = Router();
-
-const users = [{ userId: "user_1", userName: "pepe", password: "123" }];
 
 /*
  * #swagger.tags = ['Auth']
@@ -37,20 +36,36 @@ const users = [{ userId: "user_1", userName: "pepe", password: "123" }];
  *    }
  * }
  */
-router.post("/login", (request, response) => {
-    const { userName, password } = request.body.user;
+router.post("/login", async (request, response) => {
+    const { email, password } = request.body;
 
-    const user = users.find(
-        (user) => user.userName === userName && user.password === password,
-    );
+    const user = await User.findOne({ email });
 
-    const token = jwt.sign({ userId: user.userId }, config.jwtTokenSecret, {
+    if (!user || user.password !== password) {
+        return response.status(401).json({
+            ok: false,
+            message: "credenciales invalidas",
+        });
+    }
+
+    const token = jwt.sign({ userId: user._id }, config.jwtTokenSecret, {
         expiresIn: "1h",
     });
 
     response.status(200).json({
         ok: true,
         token,
+        message: "usuario creado",
+    });
+});
+
+router.post("/register", async (request, response) => {
+    const { email, password } = request.body.user;
+    const user = await User.create({ email, password });
+
+    response.status(200).json({
+        ok: true,
+        userId: user._id,
         message: "usuario creado",
     });
 });
