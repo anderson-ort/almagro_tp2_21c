@@ -4,19 +4,20 @@ const BUCKET = process.env.SUPABASE_BUCKET
 
 /**
  * Uploads the raw file buffer to Supabase Storage.
- * Path inside the bucket: <filename> (flat, no folders).
- * Returns the public URL (or null if the bucket is private).
+ * Path uses a timestamp prefix to avoid silent overwrites on same filename.
+ * Returns the storage path for reference.
  */
 export const uploadRawFile = async (fileBuffer, filename, mimeType) => {
+  const storagePath = `${Date.now()}_${filename}`
+
   const { data, error } = await supabase.storage
     .from(BUCKET)
-    .upload(filename, fileBuffer, {
+    .upload(storagePath, fileBuffer, {
       contentType: mimeType,
-      upsert: true,          // overwrite if same filename is re-uploaded
+      upsert: false,
     })
 
   if (error) throw new Error(`Supabase Storage upload failed: ${error.message}`)
 
-  // Return the storage path so callers can reference the original file
   return data.path
 }

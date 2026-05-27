@@ -6,6 +6,10 @@ import { saveChunk } from '../repositories/chunk.repository.js'
 const CHUNK_SIZE = 600    // characters — good balance for Gemini embeddings
 const CHUNK_OVERLAP = 80  // overlap to avoid cutting context at boundaries
 
+if (CHUNK_OVERLAP >= CHUNK_SIZE) {
+  throw new Error(`CHUNK_OVERLAP (${CHUNK_OVERLAP}) must be less than CHUNK_SIZE (${CHUNK_SIZE})`)
+}
+
 // ---------------------------------------------------------------------------
 // Text extraction
 // ---------------------------------------------------------------------------

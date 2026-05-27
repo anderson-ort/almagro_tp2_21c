@@ -5,7 +5,7 @@ import { processFile } from '../services/upload.service.js'
 
 const router = express.Router()
 
-const ACCEPTED_TYPES = ['application/pdf', 'text/markdown', 'text/plain']
+const ACCEPTED_TYPES = ['application/pdf', 'text/markdown', 'text/plain', 'text/x-markdown']
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -22,7 +22,7 @@ const upload = multer({
 // POST /api/v1/upload
 // Protected: X-API-Key header required
 // Body: multipart/form-data, field "file"
-router.post('/', upload.single('file'), async (req, res) => {
+router.post('/', verifyApiKey, upload.single('file'), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file received' })
   }
@@ -38,6 +38,14 @@ router.post('/', upload.single('file'), async (req, res) => {
     console.error('[upload] Error:', err.message)
     res.status(422).json({ error: err.message })
   }
+})
+
+// Multer error handler (file type / size rejections)
+router.use((err, req, res, next) => {
+  if (err) {
+    return res.status(400).json({ error: err.message })
+  }
+  next()
 })
 
 export default router

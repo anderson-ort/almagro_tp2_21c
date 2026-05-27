@@ -12,12 +12,17 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ error: '"prompt" is required' })
   }
 
+  const parsedTopK = parseInt(topK, 10)
+  if (isNaN(parsedTopK) || parsedTopK < 1) {
+    return res.status(400).json({ error: '"topK" must be a positive integer' })
+  }
+
   try {
-    const result = await queryRAG(prompt.trim(), Math.min(topK, 10))
+    const result = await queryRAG(prompt.trim(), Math.min(parsedTopK, 10))
     res.json(result)
   } catch (err) {
     console.error('[query] Error:', err.message)
-    res.status(500).json({ error: 'Query failed', detail: err.message })
+    res.status(500).json({ error: 'Query failed' })
   }
 })
 
