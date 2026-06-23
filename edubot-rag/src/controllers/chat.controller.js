@@ -8,6 +8,12 @@ export const chatController = async (request, response) => {
 
     const { message, sources } = await aiService.generateText(prompt);
 
+    const geminiApiResponse = {
+        userId,
+        prompt,
+        message,
+        sources,
+    };
     await repository.createChatOne(userId, prompt, message, sources);
 
     response.status(200).json({ respuesta: geminiApiResponse });

@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+import config from "../config/config.js";
 
 const client = new MongoClient(config.mongoUri);
 await client.connect();
@@ -26,7 +27,7 @@ const findSimilarChunks = async (queryEmbedding, limit = 3) => {
                 $vectorSearch: {
                     queryVector: queryEmbedding,
                     path: "embedding",
-                    numCandidates: limit * 2,
+                    numCandidates: limit * 10,
                     limit,
                     index: "embedding_index",
                 },

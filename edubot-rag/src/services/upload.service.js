@@ -1,11 +1,11 @@
 import { uploaderRawFile } from "./storage.service.js";
 import { embedChunks } from "./embedding.service.js";
-import { saveChunksToVectorStore } from "./storage.service.js";
+import { saveChunksToVectorStore } from "../repositories/chunk.repository.js";
 
 const CHUNK_SIZE = 600;
 const CHUNK_OVERLAP = 80;
 
-if (CHUNK_SIZE >= CHUNK_OVERLAP) {
+if (!(CHUNK_SIZE >= CHUNK_OVERLAP)) {
     throw new Error("CHUNK_SIZE must be less than CHUNK_OVERLAP");
 }
 

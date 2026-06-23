@@ -11,14 +11,15 @@ import { uploadRouter } from "./src/routes/upload.router.js";
 import { accessPreInfoRequest } from "./src/middlewares/preRequest.middleware.js";
 import { authMiddleware } from "./src/middlewares/auth.middleware.js";
 import swaggerUi from "swagger-ui-express";
+import path from "path";
 import fs from "fs";
 
-const swaggerFile = JSON.parse(
-    fs.readFileSync("./swagger-output.json", "utf-8"),
-);
+const swaggerPath = path.join(process.cwd(), "swagger-output.json");
+const swaggerFile = JSON.parse(fs.readFileSync(swaggerPath, "utf-8"));
 
 const VERSION = "v1";
 const BASE_PATH = `/api/${VERSION}`;
+
 const app = express();
 const morganApacheStyle =
     ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]';
@@ -50,6 +51,7 @@ app.use("/proxy", accessPreInfoRequest, proxyRouter);
 app.use(BASE_PATH, historyRouter);
 app.use(BASE_PATH, uploadRouter);
 
+// capa de authenticacion
 app.use(BASE_PATH, authRouter);
 
 // utilizando llm

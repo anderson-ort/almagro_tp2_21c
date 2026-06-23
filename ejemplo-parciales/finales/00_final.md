@@ -98,7 +98,7 @@ Desarrollar una **API RESTful** en **Node.js con Express** para gestionar produc
      * Update con `x-api-key` y/o Token válido.
      * Delete protegido.
      * Endpoint `/api/v1/albums/csv` que devuelve el CSV (y/o descarga).
-   * Incluir comentarios en el archivo con instrucciones sobre cómo generar/colocar una `x-api-key` de prueba o token JWT de prueba.
+   * Incluir comentarios en el archivo con instrucciones sobre cómo generar/colocar una  JWT de prueba.
 
 7. **Organización del proyecto (sugerida)**
 

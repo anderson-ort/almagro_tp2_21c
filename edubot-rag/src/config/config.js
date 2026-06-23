@@ -1,4 +1,4 @@
-export const config = {
+const config = {
     jwtTokenSecret: process.env.JWT_TOKEN_SECRET,
     googleApiKey: process.env.GOOGLE_API_KEY,
     modelLlm: process.env.MODEL_LLM,
@@ -8,4 +8,9 @@ export const config = {
     bucketName: process.env.SUPABASE_BUCKET_NAME,
     modelEmbedding: process.env.MODEL_EMBEDDING,
     outputDimensionality: process.env.MODEL_EMBEDDING_DIM,
+    supabaseUrl: process.env.SUPABASE_URL,
+    supabaseServiceKey: process.env.SUPABASE_SERVICE_KEY,
+    mongoCollectionName: process.env.MONGODB_COLLECTION,
 };
+
+export default config;

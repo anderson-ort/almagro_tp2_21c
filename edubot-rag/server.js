@@ -1,6 +1,6 @@
 import app from "./app.js";
 import { connectMongo } from "./src/databases/mongo.cnx.js";
-import { config } from "./src/config/config.js";
+import config from "./src/config/config.js";
 
 app.listen(3000, async () => {
     if (config.chatStorage === "mongo") {

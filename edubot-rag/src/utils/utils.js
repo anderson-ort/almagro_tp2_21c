@@ -1,10 +1,11 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
+import path from "path";
 
-// const root = process.cwd()
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(path.dirname(path.dirname(__filename)))
+import { fileURLToPath } from "url";
 
-const __joiner = (...params) => path.join(__dirname, ...params)
+const root = process.cwd();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(path.dirname(path.dirname(__filename)));
 
-export { __joiner }
+const __joiner = (...params) => path.join(root, ...params);
+
+export { __joiner };

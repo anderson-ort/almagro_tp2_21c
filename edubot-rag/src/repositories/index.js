@@ -1,6 +1,6 @@
 import ChatRepositoryMongoService from "./mongo.repository.js";
 import ChatRepositoryFileService from "./file.repository.js";
-import { config } from "../config/config.js";
+import config from "../config/config.js";
 
 class ChatRepositoryFactory {
     static create() {

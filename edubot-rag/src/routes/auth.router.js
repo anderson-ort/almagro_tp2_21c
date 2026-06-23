@@ -1,6 +1,6 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
-import { config } from "../config/config.js";
+import config from "../config/config.js";
 import User from "../models/user.schema.js";
 
 const router = Router();

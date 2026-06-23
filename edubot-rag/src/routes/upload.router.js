@@ -1,5 +1,5 @@
 import { Router } from "express";
-import uploader from "../utils/uploader.js";
+import { uploader } from "../utils/uploader.js";
 import { processFile } from "../services/upload.service.js";
 
 const router = Router();
@@ -29,4 +29,4 @@ router.use((error, request, response, next) => {
     next();
 });
 
-export default router;
+export { router as uploadRouter };
