@@ -20,7 +20,7 @@ Desarrollar una API REST que permita a un usuario autenticarse con JWT, obtener 
 
 - **Usuario fijo para login:** `{ username: "alumno", password: "123456" }`
 - **JWT:** Debe expirar en 2 horas.
-- **API externa a consumir:** Dragon Ball API (https://dragonball-api.com).
+- **API externa a consumir:** Dragon Ball API ([https://dragonball-api.com](https://web.dragonball-api.com/)).
     - Endpoint base: `https://dragonball-api.com/api/characters`
     - En `GET /characters/random` se debe consumir el endpoint que devuelve un personaje aleatorio o bien obtener todos los personajes y seleccionar uno al azar. La respuesta de la API externa tiene una estructura similar a:
       ```json
